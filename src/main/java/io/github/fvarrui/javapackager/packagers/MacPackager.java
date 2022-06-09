@@ -126,10 +126,19 @@ public class MacPackager extends Packager {
 		// we now need to convert to a binary using shc https://github.com/neurobin/shc
 		// shc needs to be installed so it will be available on commandline
 		// if the user needs this to be done, for example if he uses JFileChooser in his project.
-		String[] env = new String[3];
+
+		String osArchitecture = System.getProperty("os.arch");
+		boolean isAarch64 = osArchitecture.toLowerCase().equals("aarch64");
+
+		String[] env = new String[4];
 		env[0] = "SHELL=/bin/bash";
 		env[1] = "TERM=xterm";
 		env[2] = "LC_ALL=.utf8";
+		if (!isAarch64) {
+			env[3] = "CFLAGS=-target x86_64-apple-macos10.12";
+		} else {
+			env[3] = "CFLAGS=-target arm64-apple-macos11";
+		}
 
 		String[] compileStubCommandString = new String[6];
 		compileStubCommandString[0] = "shc";
@@ -150,6 +159,7 @@ public class MacPackager extends Packager {
 		Runtime rt = Runtime.getRuntime();
 
 		try {
+
 			Process compileProcess = rt.exec(compileStubCommandString, env, macOSFolder);
 			compileProcess.waitFor();
 
