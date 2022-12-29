@@ -148,14 +148,8 @@ public class GenerateDmg extends ArtifactGenerator<MacPackager> {
 		}
 
 		// extra SetFile command to make sure the volume icon works
-		File actualVolumeIcon = new File(mountFolder, ".VolumeIcon.icns");
-		if (actualVolumeIcon.exists()){
-			Logger.info("actual VolumeIcon.icns exists");
-		} else {
-			Logger.info("actual VolumeIcon.icns does not exist");
-		}
-		Logger.info("setting SetFile -c icnC " + actualVolumeIcon.getAbsolutePath());
-		execute("SetFile", "-c", "icnC", actualVolumeIcon);
+		Logger.info("setting SetFile -c icnC " + volumeIconFile.getAbsolutePath());
+		execute("SetFile", "-c", "icnC", volumeIconFile);
 		// tells the volume that it has a special file attribute
 		Logger.info("setting SetFile -a C " + mountFolder.getAbsolutePath());
 		execute("SetFile", "-a", "C", mountFolder);
