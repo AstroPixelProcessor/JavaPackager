@@ -80,18 +80,8 @@ public class GenerateDmg extends ArtifactGenerator<MacPackager> {
 		
 		// copies volume icon
 		Logger.info("Copying icon file: " + iconFile.getAbsolutePath());
-		File volumeIcon = (macConfig.getVolumeIcon() != null) ? macConfig.getVolumeIcon() : iconFile;
-		File volumeIconFile = new File(appFolder, ".VolumeIcon.icns");
-		FileUtils.copyFileToFile(volumeIcon, volumeIconFile);
-		if (volumeIconFile.exists()) {
-
-			Logger.info("Volume Icon copied successfully!");
-
-		} else {
-
-			Logger.info("Volume Icon NOT copied successfully!");
-			return null;
-		}
+		File volumeIcon = (macConfig.getVolumeIcon() != null) ? macConfig.getVolumeIcon() : iconFile;  
+		FileUtils.copyFileToFile(volumeIcon, new File(appFolder, ".VolumeIcon.icns"));
 
 		// creates image
 		Logger.info("Creating image: " + tempDmgFile.getAbsolutePath());
@@ -147,11 +137,7 @@ public class GenerateDmg extends ArtifactGenerator<MacPackager> {
 			execute("bless", "--folder", mountFolder, "--openfolder", mountFolder);
 		}
 
-		// extra SetFile command to make sure the volume icon works
-		Logger.info("setting SetFile -c icnC " + volumeIconFile.getAbsolutePath());
-		execute("SetFile", "-c", "icnC", volumeIconFile);
 		// tells the volume that it has a special file attribute
-		Logger.info("setting SetFile -a C " + mountFolder.getAbsolutePath());
 		execute("SetFile", "-a", "C", mountFolder);
 		
 		// unmounts
