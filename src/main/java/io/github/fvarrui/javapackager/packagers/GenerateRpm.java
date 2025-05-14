@@ -52,9 +52,15 @@ public class GenerateRpm extends ArtifactGenerator<LinuxPackager> {
 		File desktopFile = new File(assetsFolder, name + ".desktop");
 		VelocityUtils.render("linux/desktop.vtl", desktopFile, packager);
 		Logger.info("Desktop file rendered in " + desktopFile.getAbsolutePath());
-		
+
+		// generates 2nd desktop file from velocity template
+		File desktopFileHiDPI = new File(assetsFolder, name + "-hidpi" + ".desktop");
+		VelocityUtils.render("linux/desktop-hidpi.vtl", desktopFileHiDPI, packager);
+		Logger.info("Rendering HiDPI desktop file to " + desktopFileHiDPI.getAbsolutePath());
+
 		// copies desktop file to app
 		FileUtils.copyFileToFolder(desktopFile, appFolder);
+		FileUtils.copyFileToFolder(desktopFileHiDPI, appFolder);
 
 		// creates RPM builder
 		Builder builder = new Builder();
@@ -76,6 +82,7 @@ public class GenerateRpm extends ArtifactGenerator<LinuxPackager> {
 
 		// link to desktop file
 		addLink(builder, "/usr/share/applications/" + desktopFile.getName(), appPath + "/" + desktopFile.getName());
+		addLink(builder, "/usr/share/applications/" + desktopFileHiDPI.getName(), appPath + "/" + desktopFileHiDPI.getName());
 
 		// copy and link to mime.xml file
 		if (mimeXmlFile != null) {

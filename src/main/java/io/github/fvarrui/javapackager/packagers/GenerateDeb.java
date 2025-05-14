@@ -71,7 +71,12 @@ public class GenerateDeb extends ArtifactGenerator<LinuxPackager> {
 		File desktopFile = new File(assetsFolder, name + ".desktop");
 		VelocityUtils.render("linux/desktop.vtl", desktopFile, packager);
 		Logger.info("Desktop file rendered in " + desktopFile.getAbsolutePath());
-		
+
+		// generates 2nd desktop file from velocity template
+		File desktopFileHiDPI = new File(assetsFolder, name + "-hidpi" + ".desktop");
+		VelocityUtils.render("linux/desktop-hidpi.vtl", desktopFileHiDPI, packager);
+		Logger.info("Rendering HiDPI desktop file to " + desktopFileHiDPI.getAbsolutePath());
+
 		// generates deb control file from velocity template
 		File controlFile = new File(assetsFolder, "control");
 		VelocityUtils.render("linux/control.vtl", controlFile, packager);
@@ -124,9 +129,18 @@ public class GenerateDeb extends ArtifactGenerator<LinuxPackager> {
 		desktopFileData.setType("file");
 		desktopFileData.setSrc(desktopFile);
 		desktopFileData.addMapper(desktopFileMapper);
-		
-		dataProducers.add(desktopFileData);
 
+		Mapper desktopFileHiDPIMapper = new Mapper();
+		desktopFileHiDPIMapper.setType("perm");
+		desktopFileHiDPIMapper.setPrefix("/usr/share/applications");
+
+		Data desktopFileHiDPIData = new Data();
+		desktopFileHiDPIData.setType("file");
+		desktopFileHiDPIData.setSrc(desktopFileHiDPI);
+		desktopFileHiDPIData.addMapper(desktopFileHiDPIMapper);
+
+		dataProducers.add(desktopFileData);
+		dataProducers.add(desktopFileHiDPIData);
 		
 		// mime.xml file data producer 
 
