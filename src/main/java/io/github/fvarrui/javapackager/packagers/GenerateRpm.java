@@ -103,9 +103,17 @@ public class GenerateRpm extends ArtifactGenerator<LinuxPackager> {
 		String suffix = "-1." + arch + ".rpm";
 		File originalRpm = new File(outputDirectory, name + "-" + version + suffix);
 		File rpm = null;
+		System.out.println(" 1 ");
 		if (originalRpm.exists()) {
+			System.out.println(" 2 ");
 			rpm = new File(outputDirectory, name + "_" + version + ".rpm");
-			if (rpm.exists()) rpm.delete();
+			System.out.println(" 3 ");
+			if (rpm.exists()) {
+				System.out.println(" 4 ");
+				rpm.delete();
+				System.out.println(" 5 ");
+			}
+			System.out.println(" 6 ");
 			FileUtils.rename(originalRpm, rpm.getName());
 		}
 
