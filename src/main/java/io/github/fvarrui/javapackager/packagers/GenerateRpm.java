@@ -95,25 +95,19 @@ public class GenerateRpm extends ArtifactGenerator<LinuxPackager> {
 
 		// add all app files
 		addDirectory(builder, installationPath, appFolder, executionPermissions);
-		
+
 		// build RPM file
 		builder.build(outputDirectory);
 
 		// renames generated RPM file if created
-		String suffix = "-1." + arch + ".rpm";
-		File originalRpm = new File(outputDirectory, name + "-" + version + suffix);
+        String suffix = "-1." + arch + ".rpm";
+		File originalRpm = new File(outputDirectory, name + "-" + version + suffix.toLowerCase());
 		File rpm = null;
-		System.out.println(" 1 ");
 		if (originalRpm.exists()) {
-			System.out.println(" 2 ");
 			rpm = new File(outputDirectory, name + "_" + version + ".rpm");
-			System.out.println(" 3 ");
 			if (rpm.exists()) {
-				System.out.println(" 4 ");
 				rpm.delete();
-				System.out.println(" 5 ");
 			}
-			System.out.println(" 6 ");
 			FileUtils.rename(originalRpm, rpm.getName());
 		}
 

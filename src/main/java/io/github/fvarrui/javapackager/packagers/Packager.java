@@ -444,6 +444,7 @@ public abstract class Packager extends PackagerSettings {
 					Logger.warnUnindent(generator.getArtifactName() + " NOT generated!!!");
 				}
 			} catch (Exception e) {
+				System.out.println(" exception " + e.getMessage());
 				Logger.errorUnindent(generator.getArtifactName() + " generation failed due to: " + e.getMessage(), e);
 			}
 		}
