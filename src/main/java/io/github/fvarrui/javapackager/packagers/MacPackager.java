@@ -87,7 +87,7 @@ public class MacPackager extends Packager {
 		// sets common folders
 		this.executableDestinationFolder = macOSFolder;
 		this.jarFileDestinationFolder = javaFolder;
-		this.jreBundleFolder = new File(contentsFolder, "PlugIns/" + jreDirectoryName);
+		this.jreBundleFolder = new File(contentsFolder, "PlugIns/" + jreDirectoryName + ".jre");
 		this.jreDestinationFolder = new File(jreBundleFolder, "Contents/Home");
 		this.resourcesDestinationFolder = resourcesFolder;
 
