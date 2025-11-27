@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class GenerateAppImage extends ArtifactGenerator<LinuxPackager> {
 
-	private static final String IMAGETOOL_URL = "https://github.com/AppImage/appimagetool/releases/tag/continuous/appimagetool-%s.AppImage";
+	private static final String IMAGETOOL_URL = "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-%s.AppImage";
 
 	public GenerateAppImage() {
 		super("AppImage");
