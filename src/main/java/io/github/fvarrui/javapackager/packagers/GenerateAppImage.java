@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class GenerateAppImage extends ArtifactGenerator<LinuxPackager> {
 
-	private static final String IMAGETOOL_URL = "https://github.com/AppImage/appimagetool/releases/tag/continuous/appimagetool-%s.AppImage";
+	private static final String IMAGETOOL_URL = "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-%s.AppImage";
 
 	public GenerateAppImage() {
 		super("AppImage");
@@ -24,7 +24,7 @@ public class GenerateAppImage extends ArtifactGenerator<LinuxPackager> {
 		if (!packager.getLinuxConfig().isGenerateAppImage()) {
 			return true;
 		}
-		
+
 		if (!packager.getPlatform().isCurrentPlatform() && !packager.isForceInstaller()) {
 			Logger.warn(getArtifactName() + " cannot be generated due to the target platform (" + packager.getPlatform() + ") is different from the execution platform (" + Platform.getCurrentPlatform() + ")!");
 			return true;
